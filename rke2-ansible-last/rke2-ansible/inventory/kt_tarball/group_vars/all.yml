@@ -1,0 +1,14 @@
+
+iptables_offline_dir: "/home/ubuntu/kt/iptables-offline"
+
+rke2_install_local_tarball_path: "/home/ubuntu/rke2_install/v1.31.7/rke2.linux-amd64.tar.gz"
+rke2_install_version: "v1.31.7+rke2r1"
+
+rke2_registry_config_file_path: "/home/ubuntu/rke2-ansible/inventory/kt_tarball/files/registries.yaml"
+
+ansible_user: ec2-user
+ansible_ssh_private_key_file: "/home/ubuntu/ozia.pem"
+ansible_python_interpreter: "/usr/bin/python3"
+
+cluster_rke2_config:
+  selinux: false

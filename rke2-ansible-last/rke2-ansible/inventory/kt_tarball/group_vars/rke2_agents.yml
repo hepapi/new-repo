@@ -1,0 +1,4 @@
+---
+group_rke2_config:
+  system-default-registry: nexus.necipulusoy.com
+  node-name: "{{ node_name }}"

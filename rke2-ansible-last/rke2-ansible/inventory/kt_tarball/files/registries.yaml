@@ -1,0 +1,15 @@
+mirrors:
+  '*':
+    endpoint:
+      - "https://nexus.necipulusoy.com:443"
+    # rewrite:
+    #   "^rancher/(.*)": "rancher/$1"
+      
+
+configs:
+  nexus.necipulusoy.com:
+    auth:
+      username: "admin"  
+      password: "hepapi01"   
+    tls:
+      insecure_skip_verify: true

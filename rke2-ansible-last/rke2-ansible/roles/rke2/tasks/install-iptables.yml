@@ -1,0 +1,24 @@
+- name: Copy iptables RPM files to remote hosts
+  ansible.builtin.copy:
+    src: "{{ iptables_offline_dir }}/"
+    dest: "/tmp/iptables-offline/"
+    mode: '0644'
+    owner: root
+    group: root
+    remote_src: false
+
+- name: Install all RPMs using dnf with --disablerepo="*"
+  shell: |
+    cd /tmp/iptables-offline && \
+    dnf install ./*.rpm --disablerepo="*" -y
+  args:
+    executable: /bin/bash
+
+
+- name: Ensure nexus.necipulusoy.com is mapped in /etc/hosts
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    line: "10.0.3.43 nexus.necipulusoy.com"
+    state: present
+    create: yes
+  become: true

@@ -1,0 +1,20 @@
+---
+rke2_manifest_config_directory: "{{ playbook_dir }}/inventory/kt_tarball/pre_deploy_manifests/"
+rke2_audit_policy_config_file_path: "{{ playbook_dir }}/inventory/kt_tarball/files/audit-policy.yaml"
+group_rke2_config:
+  system-default-registry: nexus.necipulusoy.com
+  cni: none
+  disable-kube-proxy: false
+  disable:
+    - canal
+    - calico
+    - flannel
+  etcd-snapshot-schedule-cron: "0 */8 * * *"
+  etcd-snapshot-retention: 21
+  node-name: "{{ node_name }}"
+  audit-policy-file: /etc/rancher/rke2/audit-policy.yaml
+  kube-apiserver-arg:
+    - audit-policy-file=/etc/rancher/rke2/audit-policy.yaml
+    - audit-log-path=/var/lib/rancher/rke2/server/logs/audit.log
+
+
