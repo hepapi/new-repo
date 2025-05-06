@@ -1,0 +1,63 @@
+---
+clusterName: "elasticsearch"
+nodeGroup: "master"
+
+roles:
+  - master
+  - data
+  - data_content
+  - data_hot
+  - data_warm
+  - data_cold
+  - ingest
+  - ml
+  - remote_cluster_client
+  - transform
+
+replicas: 1
+minimumMasterNodes: 1
+
+secret:
+  enabled: true
+  password: ""
+
+image: "docker.elastic.co/elasticsearch/elasticsearch"
+imageTag: "8.5.1"
+imagePullPolicy: "IfNotPresent"
+
+resources:
+  requests:
+    cpu: "1000m"
+    memory: "2Gi"
+  limits:
+    cpu: "1000m"
+    memory: "2Gi"
+
+
+networkHost: "0.0.0.0"
+
+volumeClaimTemplate:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 30Gi
+
+persistence:
+  enabled: true
+
+service:
+  enabled: true
+  type: ClusterIP
+
+ingress:
+  enabled: true
+  className: "nginx"
+  pathtype: ImplementationSpecific
+  hosts:
+    - host: elasticsearch-nonprod.kuveytturk.com.tr
+      paths:
+        - path: /
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
