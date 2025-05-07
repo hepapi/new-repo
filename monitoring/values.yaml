@@ -1,0 +1,67 @@
+alertmanager:
+  enabled: false
+  ingress:
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    enabled: false
+    hosts:
+    - ""
+crds:
+  enabled: true
+grafana:
+  adminPassword: ""
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+      - access: proxy
+        editable: true
+        isDefault: true
+        jsonData:
+          timeInterval: 5s
+        name: ds-test
+        type: prometheus
+        url: http://prometheus-kube-prometheus-prometheus:9090
+      - access: proxy
+        editable: true
+        isDefault: false
+        jsonData:
+          timeInterval: 5s
+        name: upstream
+        type: prometheus
+        url: https://
+  defaultDashboardsEditable: true
+  defaultDashboardsTimezone: Europe/Istanbul
+  enabled: true
+  ingress:
+    annotations:
+      kubernetes.io/ingress.class:              #change
+    enabled: true
+    hosts:
+    - ""
+    path: /
+  persistence:
+    accessModes:
+    - ReadWriteOnce
+    enabled: true
+    size: 1Gi
+    type: pvc
+prometheus:
+  enabled: true
+  ingress:
+    annotations:
+      kubernetes.io/ingress.class:              #change
+    enabled: true
+    hosts:
+    - ""
+  prometheusSpec:
+    retention: 90d
+    retentionSize: 140GB
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: 150Gi
