@@ -1,0 +1,42 @@
+version: "3.3"
+services:
+  traefik:
+    image: "traefik:v3.3.5"
+    restart: unless-stopped
+    command:
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.file.directory=/certs/"
+      - "--entrypoints.web.address=:80"
+      - "--entryPoints.websecure.address=:443"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--serverstransport.insecureskipverify=true"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./certs/:/certs/"
+  nexus:
+    image: sonatype/nexus3:3.79.1
+    restart: unless-stopped
+    volumes:
+        - './nexus-data:/nexus-data'
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nexus.rule=Host(`nexus.necipulusoy.com`) && PathPrefix(`/`)"
+      - "traefik.http.services.nexus.loadbalancer.server.port=8081"
+      - "traefik.http.routers.nexus.service=nexus"
+      - "traefik.http.routers.nexus.entrypoints=websecure"
+      - "traefik.http.routers.nexus.tls=true"
+      - "traefik.http.routers.dockerhub.rule=Host(`nexus.necipulusoy.com`) && PathPrefix(`/v2`)"
+      - "traefik.http.services.dockerhub.loadbalancer.server.port=8082"
+      - "traefik.http.routers.dockerhub.service=dockerhub"
+      - "traefik.http.routers.dockerhub.entrypoints=websecure"
+      - "traefik.http.routers.dockerhub.tls=true"
+      - "traefik.http.routers.hosted.rule=Host(`nexus.necipulusoy.com`) && PathPrefix(`/v2/hosted`)"
+      - "traefik.http.services.hosted.loadbalancer.server.port=8083"
+      - "traefik.http.routers.hosted.service=hosted"
+      - "traefik.http.routers.hosted.entrypoints=websecure"

@@ -1,0 +1,11 @@
+tls:
+  certificates:
+    - certFile: /home/ubuntu/certs/fullchain.pem
+      keyFile: /home/ubuntu/certs/privkey.pem
+      stores:
+        - default
+  stores:
+    default:
+      defaultCertificate:
+        certFile: /certs/fullchain.pem
+        keyFile: /certs/privkey.pem
