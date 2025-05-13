@@ -1,5 +1,4 @@
-
-iptables_offline_dir: "/home/ubuntu/kt/iptables-offline"
+#iptables_offline_dir: "/home/ubuntu/kt/iptables-offline"
 
 rke2_install_local_tarball_path: "/home/ubuntu/rke2_install/v1.31.7/rke2.linux-amd64.tar.gz"
 rke2_install_version: "v1.31.7+rke2r1"
