@@ -48,6 +48,9 @@
 - name:  Pre-Hepapi
   ansible.builtin.include_tasks: pre_hepapi.yml
 
+- name:  Install NFS
+  ansible.builtin.include_tasks: install-nfs.yml
+
 - name: Has rke2 been installed already
   ansible.builtin.include_tasks: previous_install.yml
 

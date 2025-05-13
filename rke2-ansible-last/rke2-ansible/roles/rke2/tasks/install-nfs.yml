@@ -1,0 +1,14 @@
+- name: Update dnf cache
+  dnf:
+    Update_cache: yes
+
+- name: Ensure nfs-utils is installed
+  ansible.builtin.yum:
+    name: nfs-utils
+    state: present
+
+- name: Ensure nfs-service started
+  ansible.builtin.systemd:
+    name: nfs-client.target
+    state: started
+    enabled: yes
