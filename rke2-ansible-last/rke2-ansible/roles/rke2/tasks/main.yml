@@ -40,10 +40,10 @@
 - name: Satisfy OS Pre-Reqs
   ansible.builtin.include_tasks: pre_reqs.yml
 
-- name:  Install iptables
-  ansible.builtin.include_tasks: install-iptables.yml
-  when:
-    - ansible_facts['os_family'] == 'RedHat' or ansible_facts['os_family'] == 'Rocky'
+#- name:  Install iptables
+  #ansible.builtin.include_tasks: install-iptables.yml
+  #when:
+    #- ansible_facts['os_family'] == 'RedHat' or ansible_facts['os_family'] == 'Rocky'
 
 - name:  Pre-Hepapi
   ansible.builtin.include_tasks: pre_hepapi.yml
